@@ -39,6 +39,7 @@ package_list = {
 package_list.each do |pkg, ver|
     package pkg do
         version ver
+        options "--force-yes"
         action :install
     end
 end
