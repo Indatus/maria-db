@@ -14,7 +14,7 @@ apt_repository 'mariadb-server' do
     deb_src      true
 end
 
-apt_preference 'mariadb' do
+apt_preference 'mariadb.pref' do
     glob         '*'
     pin          'origin http://ftp.osuosl.org/pub/mariadb/repo/5.5/ubuntu'
     pin_priority '1000'
@@ -23,13 +23,16 @@ end
 #include build-essential for compiling C software
 include_recipe 'build-essential'
 
-case node['platform_family']
-  when "debian"
-    package_list = ['mariadb-galera-server', 'galera']
-end
+package_list = {
+    'libmysqlclient18' => '5.5.33a+maria-1~precise',
+    'mysql-common' => '5.5.33a+maria-1~precise',
+    'mariadb-galera-server' => nil,
+    'galera' => nil   
+}
 
-package_list.each do |pkg|
-  package pkg do
-    action :install
-  end
+package_list.each do |pkg, ver|
+    package pkg do
+        version ver
+        action :install
+    end
 end
