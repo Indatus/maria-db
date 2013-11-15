@@ -69,5 +69,4 @@ template "/etc/mysql/my.cnf" do
   owner "root"
   group "root"
   notifies :restart, "service[mysql]"
-  variables :wsrep_cluster_address => node['mariadb']['join_cluster_node']
 end

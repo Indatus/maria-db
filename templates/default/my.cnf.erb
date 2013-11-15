@@ -167,7 +167,7 @@ key_buffer      = 16M
 
 # MariaDB / Galera Cluster Settings
 wsrep_provider                 = /usr/lib/galera/libgalera_smm.so
-wsrep_cluster_address          = gcomm://<%= wsrep_cluster_address %>
+wsrep_cluster_address          = gcomm://<%= @node['mariadb']['join_cluster_node'] %>
 binlog_format                  = ROW
 default_storage_engine         = InnoDB
 innodb_autoinc_lock_mode       = 2
