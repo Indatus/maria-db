@@ -8,7 +8,7 @@ version          '1.0.0'
 
 depends          'apt'
 depends          'build-essential'
-depends          'mysql::client'
+depends          'mysql'
 
 recipe "maria-db", "and configures MariaDB cluster node"
 
