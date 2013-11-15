@@ -6,12 +6,18 @@ package "python-software-properties" do
 end
 
 apt_repository 'mariadb-server' do
-  uri          'http://ftp.osuosl.org/pub/mariadb/repo/5.5/ubuntu'
-  distribution  'precise'
-  components    ['main']
-  keyserver    'hkp://keyserver.ubuntu.com:80'
-  key          '0xcbcb082a1bb943db'
-  deb_src      false
+    uri          'http://ftp.osuosl.org/pub/mariadb/repo/5.5/ubuntu'
+    distribution  'precise'
+    components    ['main']
+    keyserver    'hkp://keyserver.ubuntu.com:80'
+    key          '0xcbcb082a1bb943db'
+    deb_src      true
+end
+
+apt_preference 'mariadb' do
+    glob         '*'
+    pin          'origin http://ftp.osuosl.org/pub/mariadb/repo/5.5/ubuntu'
+    pin_priority '1000'
 end
 
 #include build-essential for compiling C software
