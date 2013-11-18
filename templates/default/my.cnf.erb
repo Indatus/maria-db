@@ -83,9 +83,9 @@ key_buffer      = 16M
 wsrep_provider                  = /usr/lib/galera/libgalera_smm.so
 wsrep_provider_options          = "gcache.size=256M; gcache.page_size=128M"
 wsrep_cluster_address           = gcomm://<%= @node['mariadb']['cluster_nodes'] %>
-wsrep_cluster_name              = "<%= @node['mariadb']['cluster_name'] %>""
+wsrep_cluster_name              = "<%= @node['mariadb']['cluster_name'] %>"
 wsrep_node_address              = "<%= @node['ip_address'] %>"
-wsrep_node_name                 = "<%= @node['hostname'] %>""
+wsrep_node_name                 = "<%= @node['hostname'] %>"
 wsrep_sst_method                = xtrabackup
 wsrep_sst_auth                  = "root:<%= @node['mariadb']['server_root_password'] %>"
 #wsrep_slave_threads            = 16
