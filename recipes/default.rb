@@ -69,5 +69,5 @@ template "/etc/mysql/my.cnf" do
   mode "644"
   owner "root"
   group "root"
-  notifies :restart, "service[mysql]"
+  #notifies :restart, "service[mysql]"
 end
