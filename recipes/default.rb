@@ -65,7 +65,7 @@ end
 
 execute "assign-replication-password" do
   grant_sql = %(GRANT ALL PRIVILEGES ON *.* to '#{node['mariadb']['replication_user']}'@'%' IDENTIFIED BY '#{node['mariadb']['replication_password']}';)
-  command %("#{node['mariadb']['mysql_bin']}" -u root -e '#{grant_sql}' --password=#{node['mariadb']['server_root_password']})
+  command %(#{node['mariadb']['mysql_bin']} -u root -e "#{grant_sql}" --password=#{node['mariadb']['server_root_password']})
   action :run
 end
 
