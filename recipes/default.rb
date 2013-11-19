@@ -24,15 +24,27 @@ apt_preference 'mariadb.pref' do
 end
 
 
+apt_repository 'percona-repository' do
+    uri          'http://repo.percona.com/apt'
+    distribution  'precise'
+    components    ['main']
+    keyserver    'keys.gnupg.net'
+    key          '1C4CBDCDCD2EFD2A'
+    deb_src      true
+end
+
+
 #include build-essential for compiling C software
 include_recipe 'build-essential'
 
 
 package_list = {
-    'libmysqlclient18' => '5.5.33a+maria-1~precise',
-    'mysql-common' => '5.5.33a+maria-1~precise',
+    'libmysqlclient18'      => '5.5.33a+maria-1~precise',
+    'mysql-common'          => '5.5.33a+maria-1~precise',
     'mariadb-galera-server' => nil,
-    'galera' => nil   
+    'galera'                => nil,
+    'percona-toolkit'       => nil,
+    'percona-xtrabackup'    => nil 
 }
 
 
@@ -49,6 +61,12 @@ execute "assign-root-password" do
   command "\"#{node['mariadb']['mysqladmin_bin']}\" -u root password \"#{node['mariadb']['server_root_password']}\""
   action :run
   only_if "\"#{node['mariadb']['mysql_bin']}\" -u root -e 'show databases;'"
+end
+
+execute "assign-replication-password" do
+  grant_sql = %(GRANT ALL PRIVILEGES ON *.* to '#{node['mariadb']['replication_user']}'@'%' IDENTIFIED BY '#{node['mariadb']['replication_password']}';)
+  command %("#{node['mariadb']['mysql_bin']}" -u root -e '#{grant_sql}' --password=#{node['mariadb']['server_root_password']})
+  action :run
 end
 
 
