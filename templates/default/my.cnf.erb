@@ -87,7 +87,7 @@ wsrep_cluster_address           = gcomm://<%= @node['mariadb']['cluster_nodes'] 
 wsrep_cluster_name              = "<%= @node['mariadb']['cluster_name'] %>"
 wsrep_node_address              = "<%= @node['ip_address'] %>"
 wsrep_node_name                 = "<%= @node['hostname'] %>"
-wsrep_sst_method                = xtrabackup-v2
+wsrep_sst_method                = xtrabackup
 wsrep_sst_auth                  = "<%= @node['mariadb']['replication_user'] %>:<%= @node['mariadb']['replication_password'] %>"
 wsrep_slave_threads             = 16
 wsrep_node_incoming_address     = <%= @node['ip_address'] %>
