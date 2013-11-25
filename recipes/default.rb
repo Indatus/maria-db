@@ -86,10 +86,6 @@ execute "assign-loadbalancer-password" do
   not_if %(#{node['mariadb']['mysql_bin']} -u root -e "select User,Host from mysql.user where Host='#{node['mariadb']['load_balancer_host']}' AND User='#{node['mariadb']['load_balancer_user']}';" --password=#{node['mariadb']['server_root_password']})
 end
 
-execute "clear-bash-history" do 
-  command %(history -c)
-  action :run
-end
 
 
 service "mysql" do
