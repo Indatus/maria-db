@@ -54,10 +54,8 @@ package_list = {
     'percona-xtrabackup'    => nil 
 }
 
-execute "no-interactive-install" do
-  command %(export DEBIAN_FRONTEND=noninteractive)
-  action :run
-end
+#make installs non-interactive
+ENV['DEBIAN_FRONTEND'] = "noninteractive"
 
 
 package_list.each do |pkg, ver|
