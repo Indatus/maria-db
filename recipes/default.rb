@@ -38,14 +38,26 @@ end
 include_recipe 'build-essential'
 
 
+# package_list = {
+#     'libmysqlclient18'      => nil, #'5.5.33a+maria-1~precise',
+#     'mysql-common'          => nil, #'5.5.33a+maria-1~precise',
+#     'mariadb-galera-server' => nil,
+#     'galera'                => nil,
+#     'percona-toolkit'       => nil,
+#     'percona-xtrabackup'    => nil 
+# }
 package_list = {
-    'libmysqlclient18'      => nil, #'5.5.33a+maria-1~precise',
-    'mysql-common'          => nil, #'5.5.33a+maria-1~precise',
+    'libmysqlclient18'      => nil,
     'mariadb-galera-server' => nil,
     'galera'                => nil,
     'percona-toolkit'       => nil,
     'percona-xtrabackup'    => nil 
 }
+
+execute "no-interactive-install" do
+  command %(export DEBIAN_FRONTEND=noninteractive)
+  action :run
+end
 
 
 package_list.each do |pkg, ver|
