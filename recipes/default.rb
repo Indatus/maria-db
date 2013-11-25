@@ -80,10 +80,9 @@ execute "assign-replication-password" do
 end
 
 execute "assign-loadbalancer-password" do
-  user_sql = %(USE mysql; INSERT INTO user (Host,User) values ('#{node['mariadb']['load_balancer_host']}','#{node['mariadb']['load_balancer_user']}'); FLUSH PRIVILEGES;)
+  user_sql = %(INSERT INTO mysql.user (Host,User) values ('#{node['mariadb']['load_balancer_host']}','#{node['mariadb']['load_balancer_user']}'); FLUSH PRIVILEGES;)
   command %(#{node['mariadb']['mysql_bin']} -u root -e "#{user_sql}" --password=#{node['mariadb']['server_root_password']})
   action :run
-  not_if %(#{node['mariadb']['mysql_bin']} -u root -e "select User,Host from mysql.user where Host='#{node['mariadb']['load_balancer_host']}' AND User='#{node['mariadb']['load_balancer_user']}';" --password=#{node['mariadb']['server_root_password']})
 end
 
 
