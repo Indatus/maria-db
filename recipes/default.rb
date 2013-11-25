@@ -106,3 +106,12 @@ template "/etc/mysql/my.cnf" do
   group "root"
   #notifies :restart, "service[mysql]"
 end
+
+
+template "/etc/mysql/debian.cnf" do
+  source "debian.cnf.erb"
+  mode "644"
+  owner "root"
+  group "root"
+  #notifies :restart, "service[mysql]"
+end
