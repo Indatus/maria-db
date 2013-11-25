@@ -47,7 +47,7 @@ include_recipe 'build-essential'
 #     'percona-xtrabackup'    => nil 
 # }
 package_list = {
-    'libmysqlclient18'      => nil,
+    'libmysqlclient18'      => "5.5.34+maria-1~precise",
     'mariadb-galera-server' => nil,
     'galera'                => nil,
     'percona-toolkit'       => nil,
