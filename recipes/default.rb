@@ -75,7 +75,7 @@ end
 
 execute "assign-replication-password" do
   grant_sql = %(GRANT ALL PRIVILEGES ON *.* to '#{node['mariadb']['replication_user']}'@'%' IDENTIFIED BY '#{node['mariadb']['replication_password']}';)
-  check_sql %(SELECT User FROM mysql.user where User='#{node['mariadb']['replication_user']}';)
+  check_sql = %(SELECT User FROM mysql.user where User='#{node['mariadb']['replication_user']}';)
   command %(#{node['mariadb']['mysql_bin']} -u root -e "#{grant_sql}" --password=#{node['mariadb']['server_root_password']})
   action :run
   not_if %(#{node['mariadb']['mysql_bin']} -u root -e "#{check_sql}" --password=#{node['mariadb']['server_root_password']})
@@ -83,7 +83,7 @@ end
 
 execute "assign-loadbalancer-password" do
   user_sql = %(INSERT INTO mysql.user (Host,User) values ('#{node['mariadb']['load_balancer_host']}','#{node['mariadb']['load_balancer_user']}'); FLUSH PRIVILEGES;)
-  check_sql %(SELECT Host,User FROM mysql.user where Host='#{node['mariadb']['load_balancer_host']}' AND User='#{node['mariadb']['load_balancer_user']}';)
+  check_sql = %(SELECT Host,User FROM mysql.user where Host='#{node['mariadb']['load_balancer_host']}' AND User='#{node['mariadb']['load_balancer_user']}';)
   command %(#{node['mariadb']['mysql_bin']} -u root -e "#{user_sql}" --password=#{node['mariadb']['server_root_password']})
   action :run
   not_if %(#{node['mariadb']['mysql_bin']} -u root -e "#{check_sql}" --password=#{node['mariadb']['server_root_password']})
