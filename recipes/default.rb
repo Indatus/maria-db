@@ -8,19 +8,38 @@ end
 
 
 apt_repository 'mariadb-server' do
-    uri          'http://ftp.osuosl.org/pub/mariadb/repo/5.5/ubuntu'
+    uri          'http://mirror.stshosting.co.uk/mariadb/repo/5.5/ubuntu'
     distribution  'precise'
     components    ['main']
     keyserver    'hkp://keyserver.ubuntu.com:80'
-    key          '0xcbcb082a1bb943db'
+    key          '1BB943DB'
     deb_src      true
+    notifies :run, resources(:execute => "apt-get update"), :immediately
 end
 
 
-apt_preference 'mariadb.pref' do
-    glob         '*'
-    pin          'origin http://ftp.osuosl.org/pub/mariadb/repo/5.5/ubuntu'
-    pin_priority '1000'
+#include build-essential for compiling C software
+include_recipe 'build-essential'
+
+maria_db_package_list = {
+  'galera'                    => nil,
+  'mariadb-galera-server-5.5' => nil,
+  'mariadb-client-5.5'        => nil,
+  'libmariadbclient18'        => nil,
+  'mariadb-client-core-5.5'   => nil,
+  'rsync'                     => nil,
+  'netcat-openbsd'            => nil
+}
+
+#make installs non-interactive
+ENV['DEBIAN_FRONTEND'] = "noninteractive"
+
+maria_db_package_list.each do |pkg, ver|
+    package pkg do
+        version ver
+        options "--force-yes"
+        action :install
+    end
 end
 
 
@@ -31,34 +50,15 @@ apt_repository 'percona-repository' do
     keyserver    'keys.gnupg.net'
     key          '1C4CBDCDCD2EFD2A'
     deb_src      true
+    notifies :run, resources(:execute => "apt-get update"), :immediately
 end
 
 
-#include build-essential for compiling C software
-include_recipe 'build-essential'
-
-
-# package_list = {
-#     'libmysqlclient18'      => nil, #'5.5.33a+maria-1~precise',
-#     'mysql-common'          => nil, #'5.5.33a+maria-1~precise',
-#     'mariadb-galera-server' => nil,
-#     'galera'                => nil,
-#     'percona-toolkit'       => nil,
-#     'percona-xtrabackup'    => nil 
-# }
-package_list = {
-    'libmysqlclient18'      => nil, #"5.5.34+maria-1~precise",
-    'mariadb-galera-server' => nil, #"5.5.33a+maria-1~precise",
-    'galera'                => nil,
-    'percona-toolkit'       => nil,
-    'percona-xtrabackup'    => nil 
+percona_package_list = {
+  'percona-toolkit'    => nil,
+  'percona-xtrabackup' => nil
 }
-
-#make installs non-interactive
-ENV['DEBIAN_FRONTEND'] = "noninteractive"
-
-
-package_list.each do |pkg, ver|
+percona_package_list.each do |pkg, ver|
     package pkg do
         version ver
         options "--force-yes"
