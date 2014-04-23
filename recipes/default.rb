@@ -103,13 +103,13 @@ service "mysql" do
 end
 
 
-template "/etc/mysql/conf.d/cluster.cnf" do
-  source "cluster.cnf.erb"
-  mode "644"
-  owner "root"
-  group "root"
-  #notifies :restart, "service[mysql]"
-end
+# template "/etc/mysql/conf.d/cluster.cnf" do
+#   source "cluster.cnf.erb"
+#   mode "644"
+#   owner "root"
+#   group "root"
+#   #notifies :restart, "service[mysql]"
+# end
 
 
 template "/etc/mysql/my.cnf" do
