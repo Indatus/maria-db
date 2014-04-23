@@ -1,0 +1,56 @@
+[mysqld]
+query_cache_size=0
+binlog_format=ROW
+default-storage-engine=InnoDB
+innodb_autoinc_lock_mode=2
+#query_cache_type=0
+
+### mysql tuning - not required by galera ###
+## specifies the size of the buffer pool in system memory
+# innodb_buffer_pool_size=28G
+# innodb_log_file_size=100M
+innodb_file_per_table
+innodb_flush_log_at_trx_commit=2
+bind-address=0.0.0.0
+
+
+
+## Galera Provider Configuration
+wsrep_provider=/usr/lib/galera/libgalera_smm.so
+
+# enabling the gcache size option requires 32G of disk space
+#wsrep_provider_options="gcache.size=32G"
+
+
+
+## Galera Cluster Configuration
+
+# wsrep_cluster_address should include all cluster nodes
+wsrep_cluster_address=gcomm://<%= @node['mariadb']['cluster_nodes'].gsub(/\s/, "") %>
+
+# wsrep_cluster_name should be the same on all cluster nodes
+wsrep_cluster_name='<%= @node['mariadb']['cluster_name'] %>'
+
+# wsrep_node_address is the address of the local machine
+wsrep_node_address='<%= @node['ip_address'] %>'
+
+# wsrep_node_nam is a name given to the local machine
+wsrep_node_name='<%= @node['hostname'] %>'
+
+# use rsync to get the cluster up and running, then switch to xtrabackup 
+#wsrep_sst_method=rsync
+wsrep_sst_method=xtrabackup
+#wsrep_sst_auth='MySQL user account:Password'
+
+
+
+## Galera Synchronization Congifuration
+
+# wsrep_node_incoming_address is the interface where the node expects to receive state transfers
+wsrep_node_incoming_address='<%= @node['ip_address'] %>'
+
+# wsrep_sst_donor is which cluster node to contacts for SST
+wsrep_sst_donor='node3'
+
+# recommendation for threads is 4 per core
+wsrep_slave_threads=4
