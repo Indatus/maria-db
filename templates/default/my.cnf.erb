@@ -27,7 +27,7 @@ bind-address        = 0.0.0.0
 
 # * Fine Tuning
 max_connections     = 500
-connect_timeout     = 5
+connect_timeout     = <%= @node['mariadb']['connect_timeout'] %>
 wait_timeout        = 600
 max_allowed_packet  = 16M
 thread_cache_size       = 128
