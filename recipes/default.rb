@@ -73,6 +73,23 @@ execute "assign-root-password" do
   only_if "\"#{node['mariadb']['mysql_bin']}\" -u root -e 'show databases;'"
 end
 
+grants_path = node['mariadb']['grants_path']
+
+template grants_path do
+  source "grants.sql.erb"
+  owner "root"
+  group node['mariadb']['root_group']
+  mode "0600"
+  action :create
+end
+
+execute "mariadb-install-privileges" do
+  command %Q["#{node['mariadb']['mysql_bin']}" -u root #{node['mariadb']['server_root_password'].empty? ? '' : '--password=' }'#{node['mariadb']['server_root_password']}' < "#{grants_path}"]
+  action :nothing
+  subscribes :run, resources("template[#{grants_path}]"), :immediately
+end
+
+
 execute "assign-replication-password" do
   grant_sql = %(GRANT ALL PRIVILEGES ON *.* to '#{node['mariadb']['replication_user']}'@'%' IDENTIFIED BY '#{node['mariadb']['replication_password']}';)
   check_sql = %(SELECT User FROM mysql.user where User='#{node['mariadb']['replication_user']}';)
