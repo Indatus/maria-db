@@ -73,6 +73,8 @@ execute "assign-root-password" do
   only_if "\"#{node['mariadb']['mysql_bin']}\" -u root -e 'show databases;'"
 end
 
+grants_path = node['mariadb']['grants_path']
+
 template grants_path do
   source "grants.sql.erb"
   owner "root"
