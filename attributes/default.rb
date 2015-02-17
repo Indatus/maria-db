@@ -16,3 +16,6 @@ default['mariadb']['slow_query_log_file']           = '/var/log/mysql/mariadb-sl
 default['mariadb']['long_query_time']               = '0'
 default['mariadb']['log_queries_not_using_indexes'] = '0'
 default['mariadb']['connect_timeout']               = '5'
+
+#innoDB
+default['mariadb']['innodb']['buffer_pool_size']    = '1G'
