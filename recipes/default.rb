@@ -47,7 +47,7 @@ apt_repository 'percona-repository' do
     uri          'http://repo.percona.com/apt'
     distribution  'precise'
     components    ['main']
-    keyserver    'keys.gnupg.net'
+    keyserver    'keyserver.ubuntu.com'
     key          '1C4CBDCDCD2EFD2A'
     deb_src      true
     notifies :run, resources(:execute => "apt-get update"), :immediately
