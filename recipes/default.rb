@@ -8,11 +8,11 @@ end
 
 
 apt_repository 'mariadb-server' do
-    uri          'http://mirror.stshosting.co.uk/mariadb/repo/5.5/ubuntu'
+    uri          'http://mirror.jmu.edu/pub/mariadb/repo/5.5/ubuntu'
     distribution  'precise'
     components    ['main']
     keyserver    'hkp://keyserver.ubuntu.com:80'
-    key          '1BB943DB'
+    key          '0xcbcb082a1bb943db'
     deb_src      true
     notifies :run, resources(:execute => "apt-get update"), :immediately
 end
