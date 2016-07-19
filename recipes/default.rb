@@ -8,7 +8,7 @@ end
 
 
 apt_repository 'mariadb-server' do
-    uri          'http://ftp.kaist.ac.kr/mariadb/repo/5.5/ubuntu'
+    uri          'http://mirror.jmu.edu/pub/mariadb/repo/5.5/ubuntu'
     distribution  'precise'
     components    ['main']
     keyserver    'hkp://keyserver.ubuntu.com:80'
