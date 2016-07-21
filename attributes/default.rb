@@ -9,6 +9,7 @@ default['mariadb']['load_balancer_user']            = "balancer-user"
 default['mariadb']['load_balancer_host']            = "host"
 default['mariadb']['replication_password']          = "password"
 default['mariadb']['cluster_name']                  = "glaera-cluster"
+default['mariadb']['wsrep_provider_options']        = "gcache.size=256M; gcache.page_size=128M"
 
 #tuning
 default['mariadb']['slow_query_log']                = '0'
