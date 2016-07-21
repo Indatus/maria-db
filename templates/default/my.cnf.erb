@@ -89,7 +89,7 @@ key_buffer      = 16M
 # MariaDB / Galera Cluster Settings
 [mariadb]
 wsrep_provider                  = /usr/lib/galera/libgalera_smm.so
-wsrep_provider_options          = "gcache.size=256M; gcache.page_size=128M"
+wsrep_provider_options          = "<%= @node['mariadb']['wsrep_provider_options'] %>"
 wsrep_cluster_address           = gcomm://<%= @node['mariadb']['cluster_nodes'].gsub(/\s/, "") %>
 wsrep_cluster_name              = "<%= @node['mariadb']['cluster_name'] %>"
 wsrep_node_address              = "<%= @node['ip_address'] %>"
