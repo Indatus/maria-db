@@ -2,7 +2,7 @@
 include_recipe 'apt'
 
 
-package "python-software-properties" do
+package ["python-software-properties", "socat"] do
     action :install
 end
 
