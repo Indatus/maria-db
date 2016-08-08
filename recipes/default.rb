@@ -9,7 +9,7 @@ end
 
 apt_repository 'mariadb-server' do
     uri          'http://mirror.jmu.edu/pub/mariadb/repo/5.5/ubuntu'
-    distribution  'precise'
+    distribution  "#{node['mariadb']['distro']}"
     components    ['main']
     keyserver    'hkp://keyserver.ubuntu.com:80'
     key          '0xcbcb082a1bb943db'
@@ -45,7 +45,7 @@ end
 
 apt_repository 'percona-repository' do
     uri          'http://repo.percona.com/apt'
-    distribution  'precise'
+    distribution  "#{node['mariadb']['distro']}"
     components    ['main']
     keyserver    'keyserver.ubuntu.com'
     key          '1C4CBDCDCD2EFD2A'
