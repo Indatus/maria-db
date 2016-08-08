@@ -1,3 +1,4 @@
+default['mariadb']['distro']                        = "precise"
 default['mariadb']['cluster_nodes']                 = ""
 default['mariadb']['mysqladmin_bin']                = "/usr/bin/mysqladmin"
 default['mariadb']['mysql_bin']                     = "/usr/bin/mysql"
